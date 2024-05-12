@@ -4,6 +4,7 @@ const helmet =  require("helmet");
 const app =  express();
 const ejs = require("ejs");
 const db = require("./model/db")
+const json2xls = require('json2xls')
 
 app.set('view engine', 'ejs');
 // view파일을 사용할때 ejs라는 엔진을 사용할 것이다.
@@ -21,6 +22,7 @@ app.use('/public',express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded());
 // post방식으로 하기 위해 꼭 넣어줘야하는 코드
+app.use(json2xls.middleware);
 
 const mainRouter = require('./router/mainRouter')
 // mainRouter에서 내보낸 것을 가져오는 코드
@@ -28,6 +30,7 @@ app.use('/', mainRouter)
 //app.use('/test',mainRouter);
 // mainRouter에서 주소를 가져올 때 middleware로 조건을 /test라는 주소를
 // 가지고 있어야지만 접속하게 함
+
 
 
 app.listen(3000, function(req,res){
